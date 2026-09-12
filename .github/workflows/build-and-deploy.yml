@@ -62,11 +62,29 @@ jobs:
             fi
           done
 
+      - name: Compile Book & Chapters to Word (Docx for Review)
+        run: |
+          mkdir -p /tmp/quarto-docx
+          mkdir -p /tmp/chapter-docx
+          echo "Rendering whole book docx"
+          quarto render --to docx
+          cp _book/high-temp-3d-printer.docx /tmp/quarto-docx/
+          for dir in chapters/* appendices/*; do
+            if [ -f "$dir/index.qmd" ]; then
+              echo "Rendering standalone docx for $dir/index.qmd"
+              quarto render "$dir/index.qmd" --profile chapter --to docx
+              mkdir -p "/tmp/chapter-docx/$dir"
+              cp "_book/$dir/index.docx" "/tmp/chapter-docx/$dir/"
+            fi
+          done
+
       - name: Compile Book to HTML (Interactive Web Book)
         run: |
           quarto render --to html
           cp /tmp/quarto-pdf/high-temp-3d-printer.pdf _book/
+          cp /tmp/quarto-docx/high-temp-3d-printer.docx _book/
           cp -r /tmp/chapter-pdfs/* _book/
+          cp -r /tmp/chapter-docx/* _book/
 
       - name: Verify Output Assets
         run: |
@@ -78,6 +96,16 @@ jobs:
         with:
           name: high-temp-3d-printer-pdf
           path: _book/high-temp-3d-printer.pdf
+          retention-days: 30
+
+      - name: Upload Review Word Documents (Commit & PR Review)
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-word-documents
+          path: |
+            _book/high-temp-3d-printer.docx
+            _book/chapters/*/*.docx
+            _book/appendices/*/*.docx
           retention-days: 30
 
       - name: Upload Pages Artifact

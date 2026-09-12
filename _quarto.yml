@@ -14,7 +14,7 @@ book:
   search: true
   page-navigation: true
   output-file: "high-temp-3d-printer"
-  downloads: [pdf]
+  downloads: [pdf, docx]
   sidebar:
     collapse-level: 2
   chapters:
@@ -52,6 +52,10 @@ bibliography:
   - chapters/08-thermal-sensors/references.bib
   - chapters/09-pid-and-firmware/references.bib
 
+csl: china-national-standard-gb-t-7714-2015-numeric.csl
+resource-path:
+  - .
+
 format:
   typst:
     papersize: a4
@@ -61,7 +65,7 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
-    keep-typ: false
+    keep-typ: true
     include-before-body: custom.typ
   html:
     theme:
@@ -73,4 +77,10 @@ format:
     code-fold: true
     code-tools: true
     lightbox: true
+    comments:
+      hypothesis: true
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
 ...

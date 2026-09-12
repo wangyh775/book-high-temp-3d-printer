@@ -1,0 +1,92 @@
+---
+name: 📝 章节审阅与批注反馈 (Chapter Review & Feedback)
+description: 导师或审阅专家对章节进行综合审阅、提出批注建议或上传批注修订稿
+title: "[审阅] 第 X 章 《章节名称》审阅批注"
+labels: ["review", "feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### 📖 章节审阅与批注指南
+        感谢您审阅《高温 3D 打印机设计与制造》专著！
+        为了最大程度贴合您的阅读习惯，您可以选择以下**任意一种最便捷的方式**提供审阅意见：
+
+        1. **🌐 在线划词批注（像 Word 批注一样快捷）**：
+           * 直接在 GitHub Pages 网页版专著中阅读；
+           * 鼠标划选任意文字，点击悬浮气泡中的 **Annotate** 即可实时添加批注与高亮。
+        2. **📄 离线 Word / PDF 批注回流（推荐习惯 Office 的老师使用）**：
+           * 下载对应章节的 `.docx`（已自动转换为 Word 原生数学公式）或 Typst 高清 PDF；
+           * 在本地使用 Word“修订模式/批注”或 PDF 阅读器批注画圈；
+           * 将修改后的文件**直接拖拽至文末附件区（或本 Issue 评论区）**，编写组与智能体将自动提取批注进行修改。
+        3. **✏️ 网页文本直接反馈**：
+           * 在下方表单中填写章节综合评价与具体段落修改建议。
+
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: 审阅目标章节
+      description: 请选择您本次审阅的章节
+      options:
+        - "第 1 章 高温 3D 打印技术概述 (chapters/01-introduction/)"
+        - "第 2 章 高温恒温腔室与热管理设计 (chapters/02-chamber-design/)"
+        - "第 3 章 机械运动机构与传动构型 (chapters/03-motion-system/)"
+        - "第 4 章 热膨胀抑制与机械补偿设计 (chapters/04-thermal-compensation/)"
+        - "第 5 章 超高温热端结构与热阻断 (chapters/05-hotend-design/)"
+        - "第 6 章 进料驱动与防碳化退火机构 (chapters/06-extruder-system/)"
+        - "第 7 章 电气系统隔离与高温耐受布置 (chapters/07-control-electronics/)"
+        - "第 8 章 极端温场测量与信号调理 (chapters/08-thermal-sensors/)"
+        - "第 9 章 固件算法、多温区解耦与自适应控制 (chapters/09-pid-and-firmware/)"
+        - "附录 A 特种工程塑料物性与成型工艺指南 (appendices/01-materials/)"
+        - "附录 B 工业级高温 3D 打印机核心 BOM 清单 (appendices/02-bom/)"
+        - "整本书稿 / 跨章节综合评审"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: evaluation_checklist
+    attributes:
+      label: 核心质量维度检查（可多选）
+      description: 请勾选本章表现良好的方面或重点关注的问题
+      options:
+        - label: "工程参数合规：喷嘴(≥450℃)、腔温(90~150℃)等符合基线"
+        - label: "机理推导严谨：传热传质、力学变形等有严密物理公式"
+        - label: "工程图表充足：具备清晰的高清构型图、对比表或实测曲线"
+        - label: "参考文献真实：引文均具备真实 DOI、作者与年，无虚构"
+        - label: "叙述精炼专业：直奔物理因果与数据，无空泛修饰与套话"
+
+  - type: textarea
+    id: overall_feedback
+    attributes:
+      label: 综合评审意见与修改方向
+      description: 给出本章的整体评价、核心补充内容或结构调整建议
+      placeholder: |
+        例如：本章关于水冷热阻断理论分析较扎实，但缺少陶瓷喉管
+        破裂临界应力计算，建议在 5.3 节补充实测对比数据与失效分析...
+    validations:
+      required: true
+
+  - type: textarea
+    id: inline_annotations
+    attributes:
+      label: 具体段落批注与文字修改建议（可选，支持逐条记录）
+      description: 可复制书中小节标题、原文语句并附上具体的修改意见
+      placeholder: |
+        【小节/位置】：2.2 腔室保温层厚度计算
+        【原文】：保温棉厚度取 15mm 即可满足要求...
+        【批注/修改建议】：此处缺少导热微分方程边界条件推导，
+        建议根据外壳 ≤55℃ 重新核算厚度并补充热阻网络图。
+
+        ------------------------------------
+        【小节/位置】：公式 (2.4)
+        【批注/修改建议】：辐射换热项的斯蒂芬-玻尔兹曼常数单位标注
+        有误，应修正为 W/(m²·K⁴)。
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ### 📎 离线批注附件上传（若有）
+        若您已经在导出的 Word / PDF 中完成了批注或开启了修订模式，
+        **请直接将文件拖拽至下方输入框（或在创建 Issue 后的讨论区上传）**。
+        编写组与 AI 智能体将直接读取批注与修订记录，精准更新 `.qmd` 源码。
