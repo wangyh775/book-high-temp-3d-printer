@@ -63,7 +63,7 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
-    keep-typ: false
+    keep-typ: true
     include-before-body: custom.typ
   html:
     theme:
