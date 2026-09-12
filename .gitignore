@@ -5,6 +5,10 @@
 index.typ
 *.typst.md
 **/*.quarto_ipynb
+/site_libs/
+chapters/**/*.html
+appendices/**/*.html
+/index.html
 
 # 本地 Typst/PDF 预览副产物
 *.synctex.gz

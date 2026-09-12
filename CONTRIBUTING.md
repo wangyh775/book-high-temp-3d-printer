@@ -49,6 +49,8 @@ git checkout -b feat/ch03-motion-system
 * **图表存放规范**：所有图片必须保存至该章节下的 `figures/` 目录（如 `chapters/03-motion-system/figures/corexy_layout.svg`），优先使用矢量图（`.svg` / `.pdf`）；
 * **文献追加规范**：所有引用的参考文献条目必须追加至该章节的 `references.bib`，并在正文中使用 `[@citekey]` 进行引用，**严禁修改根目录的 `references.bib`**；
 * **排版底线**：不要手写原生 LaTeX 文本宏（如 `\textbf`、`\cite`）或原生 HTML 标签，全部使用 Quarto 标准 Markdown 语法；
+* **严禁手动编码标题序号**：全书已启用自动编号（`number-sections: true`），标题请直接写纯文字（如 `## 腔室热平衡数学物理模型`），切勿手写 `2.1`、`2.2.1` 或 `一、`，避免生成 `2.1 2.1 标题` 的重复编号；
+* **非章节内容修改遵从最小修改原则**：修改根配置、CI 工作流或入口文档时，必须以**最小修改量、精准差异增量**实现功能，禁止无故重写或格式重排无关配置；
 * **AI 协助提示**：如果你使用 Cursor / Claude Code / Copilot 等智能体辅助写作，**请务必阅读并遵照根目录的 `AGENTS.md` 规范**。
 
 ### 第四步：本地编译自检（本地绿灯才提交）
