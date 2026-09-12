@@ -21,27 +21,24 @@
 
 ---
 
-## 🏗️ 全书目录架构
+## 📚 全书章节导览与快速入口
 
-全书划分为四个核心技术篇章与实用附录：
+点击下表链接可直接在线阅读各章节，或单独预览/下载单章独立 PDF（每章仅约 200~300 KB，无需等待整本大文件下载）：
 
-* **[前言](index.qmd)**：编写背景、读者对象与阅读指南
-* **第一部分：硬件架构与恒温物理场设计**
-  * **第 1 章 [高温 3D 打印技术概述](chapters/01-introduction/index.qmd)**：特种塑料物性、结晶动力学机理与整机顶层指标
-  * **第 2 章 [高温恒温腔室与热管理设计](chapters/02-chamber-design/index.qmd)**：腔室稳态热平衡、复合绝热壁板与均温对流风道
-* **第二部分：机械运动机构与热膨胀补偿**
-  * **第 3 章 [机械运动机构与传动构型](chapters/03-motion-system/index.qmd)**：CoreXY/门式龙门对比、高温传动副选型与惯量匹配
-  * **第 4 章 [热膨胀抑制与机械补偿设计](chapters/04-thermal-compensation/index.qmd)**：结构各向异性膨胀、运动铰链解耦与动态热漂移校准
-* **第三部分：超高温挤出与热端系统**
-  * **第 5 章 [超高温热端结构与热阻断](chapters/05-hotend-design/index.qmd)**：500℃ 喉管超强热阻断、熔体剪切流变与主动水冷回路
-  * **第 6 章 [进料驱动与防碳化退火机构](chapters/06-extruder-system/index.qmd)**：双驱动挤出夹持力学、入料区主动冷却与防回火退火
-* **第四部分：电气控制、传感与固件算法**
-  * **第 7 章 [电气系统隔离与高温耐受布置](chapters/07-control-electronics/index.qmd)**：腔外冷区隔离布局、高温电机/线束耐温等级与电磁兼容
-  * **第 8 章 [极端温场测量与信号调理](chapters/08-thermal-sensors/index.qmd)**：PT1000/热电偶测量方案、高精度 ADC 滤波与非线性校正
-  * **第 9 章 [固件算法、多温区解耦与自适应控制](chapters/09-pid-and-firmware/index.qmd)**：热端-腔室耦合解耦 PID、前馈补偿与主流固件改造
-* **附录**
-  * **附录 A [特种工程塑料物性与成型工艺指南](appendices/01-materials/index.qmd)**
-  * **附录 B [工业级高温 3D 打印机核心 BOM 清单](appendices/02-bom/index.qmd)**
+| 篇卷分部 | 章节编号与主题 | 网页在线阅读 | 单章独立 PDF 预览 | 源码 Markdown |
+| :--- | :--- | :---: | :---: | :---: |
+| **开篇** | **前言** 编写背景、读者对象与体例说明 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/) | [📥 全书 PDF (1.5M)](https://wangyh775.github.io/book-high-temp-3d-printer/high-temp-3d-printer.pdf) | [`index.qmd`](index.qmd) |
+| **第一部分** 硬件架构与恒温物理场 | **第 1 章** 高温 3D 打印技术概述 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/01-introduction/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/01-introduction/index.pdf) | [`源码`](chapters/01-introduction/index.qmd) |
+| | **第 2 章** 高温恒温腔室与热管理设计 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/02-chamber-design/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/02-chamber-design/index.pdf) | [`源码`](chapters/02-chamber-design/index.qmd) |
+| **第二部分** 机械运动与热膨胀补偿 | **第 3 章** 机械运动系统与部件选型 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/03-motion-system/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/03-motion-system/index.pdf) | [`源码`](chapters/03-motion-system/index.qmd) |
+| | **第 4 章** 热膨胀抑制与结构补偿 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/04-thermal-compensation/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/04-thermal-compensation/index.pdf) | [`源码`](chapters/04-thermal-compensation/index.qmd) |
+| **第三部分** 超高温挤出与热端系统 | **第 5 章** 超高温热端结构设计 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/05-hotend-design/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/05-hotend-design/index.pdf) | [`源码`](chapters/05-hotend-design/index.qmd) |
+| | **第 6 章** 挤出机构与高温线材驱动 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/06-extruder-system/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/06-extruder-system/index.pdf) | [`源码`](chapters/06-extruder-system/index.qmd) |
+| **第四部分** 电气控制、传感与固件算法 | **第 7 章** 高温电气与供电系统设计 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/07-control-electronics/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/07-control-electronics/index.pdf) | [`源码`](chapters/07-control-electronics/index.qmd) |
+| | **第 8 章** 高温测温与高精度采样 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/08-thermal-sensors/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/08-thermal-sensors/index.pdf) | [`源码`](chapters/08-thermal-sensors/index.qmd) |
+| | **第 9 章** 温度闭环控制与固件配置 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/09-pid-and-firmware/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/chapters/09-pid-and-firmware/index.pdf) | [`源码`](chapters/09-pid-and-firmware/index.qmd) |
+| **附录** | **附录 A** 典型高温线材物性参数表 | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/appendices/01-materials/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/appendices/01-materials/index.pdf) | [`源码`](appendices/01-materials/index.qmd) |
+| | **附录 B** 整机核心物料清单（BOM） | [🌐 网页阅读](https://wangyh775.github.io/book-high-temp-3d-printer/appendices/02-bom/) | [📄 单章 PDF](https://wangyh775.github.io/book-high-temp-3d-printer/appendices/02-bom/index.pdf) | [`源码`](appendices/02-bom/index.qmd) |
 
 ---
 
@@ -63,13 +60,19 @@
 克隆本项目到本地后，在根目录下执行：
 
 ```bash
-# 启动本地实时热重载预览（推荐写作时使用）
+# 单章网页实时预览（专注某一章，保存即 0.5s 热重载）
+quarto preview chapters/01-introduction/index.qmd
+
+# 仅编译某一章的独立 PDF（耗时 1 秒，产物位于 _book/chapters/01-introduction/index.pdf）
+quarto render chapters/01-introduction/index.qmd --profile chapter --to typst
+
+# 启动全书本地实时热重载预览
 quarto preview
 
-# 编译为交互式 HTML 网站（产物输出至 _book/ 目录）
+# 编译整本交互式 HTML 网站（产物输出至 _book/ 目录）
 quarto render --to html
 
-# 编译为专业彩印级 Typst PDF 专著（产物输出至 _book/high-temp-3d-printer.pdf）
+# 编译整本专业彩印级 Typst PDF 专著（产物输出至 _book/high-temp-3d-printer.pdf）
 quarto render --to typst
 
 # 检查当前 Quarto 环境与依赖健全性
