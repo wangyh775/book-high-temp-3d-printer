@@ -1,0 +1,30 @@
+---
+name: 🐛 笔误或公式错误反馈 (Error / Bug Report)
+description: 反馈书中的公式推导疏漏、工程参数错误、错别字或断链问题
+title: "[纠错] 章节与问题概述"
+labels: ["bug", "typo"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: 错误具体位置
+      description: 章节、小节标题及大致行号
+      placeholder: "第 2 章 2.1 节 公式 @eq-heat-balance 处"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 原文问题描述
+      description: 详细指出书中现有的错误或不严谨之处
+      placeholder: "辐射能量公式中的发射率符号使用不一致..."
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 修正建议与参考依据
+      description: 给出正确的物理推导、修正后文本或参考标准/文献
+      placeholder: "建议修正为...，参考文献参考 GB/T..."
+    validations:
+      required: false

@@ -1,0 +1,55 @@
+---
+name: 📖 章节认领 (Chapter Claim)
+description: 认领未完成章节进行撰写或大幅扩写
+title: "[认领] 章节名称"
+labels: ["chapter-claim", "in-progress"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢参与《高温 3D 打印机设计与制造》专著编写！
+        在开始编写前，请填写以下认领信息，编写组确认后即可开展工作。
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: 拟认领章节
+      description: 请选择您计划主持编写的章节
+      options:
+        - "第 1 章 高温 3D 打印技术概述 (chapters/01-introduction/)"
+        - "第 2 章 高温恒温腔室与热管理设计 (chapters/02-chamber-design/)"
+        - "第 3 章 机械运动机构与传动构型 (chapters/03-motion-system/)"
+        - "第 4 章 热膨胀抑制与机械补偿设计 (chapters/04-thermal-compensation/)"
+        - "第 5 章 超高温热端结构与热阻断 (chapters/05-hotend-design/)"
+        - "第 6 章 进料驱动与防碳化退火机构 (chapters/06-extruder-system/)"
+        - "第 7 章 电气系统隔离与高温耐受布置 (chapters/07-control-electronics/)"
+        - "第 8 章 极端温场测量与信号调理 (chapters/08-thermal-sensors/)"
+        - "第 9 章 固件算法、多温区解耦与自适应控制 (chapters/09-pid-and-firmware/)"
+        - "附录 A 特种工程塑料物性与成型工艺指南 (appendices/01-materials/)"
+        - "附录 B 工业级高温 3D 打印机核心 BOM 清单 (appendices/02-bom/)"
+    validations:
+      required: true
+  - type: input
+    id: contributor
+    attributes:
+      label: 认领人信息
+      description: 您的姓名/昵称、单位/机构及研究或工程背景
+      placeholder: "张三 / XX大学机械学院硕士生 / 从事高温3D打印机构件设计"
+    validations:
+      required: true
+  - type: textarea
+    id: outline
+    attributes:
+      label: 编写计划与拟贡献重点
+      description: 简要说明本章拟扩写的核心机理、推导、图表或实测数据
+      placeholder: "拟重点补充高温CoreXY几何张力解耦推导、PFPE高温润滑脂选型测试数据..."
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 规范承诺
+      options:
+        - label: 我已阅读并承诺遵守 `AGENTS.md`（若使用AI）及 `CONTRIBUTING.md` 规范。
+          required: true
+        - label: 承诺图片存入本章 `figures/`、文献存入本章 `references.bib`，不修改全局配置。
+          required: true

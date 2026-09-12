@@ -1,7 +1,39 @@
+# Quarto 编译产物
 /.quarto/
 /_book/
 /index_files/
 index.typ
 *.typst.md
-
 **/*.quarto_ipynb
+
+# 本地 Typst/PDF 预览副产物
+*.synctex.gz
+
+# 智能体 / AI 运行缓存
+.pi/
+
+# 操作系统临时文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE 与编辑器配置
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*~
+*.sublime-workspace
+*.sublime-project
+
+# Python 缓存（若包含绘图/数据分析脚本）
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
