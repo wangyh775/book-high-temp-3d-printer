@@ -1,5 +1,16 @@
 #import "@preview/orange-book:0.7.1": book, part, chapter, appendices
 
+// 目录样式定制：去除“第几部分 (Part)”的蓝底色块，设为透明底
+#show box: it => {
+  if it.fill != none and it.inset == 5pt {
+    let fields = it.fields()
+    let _ = fields.remove("body")
+    box(..fields, fill: none)[#it.body]
+  } else {
+    it
+  }
+}
+
 #show: book.with(
 $if(title)$
   title: [$title$],
