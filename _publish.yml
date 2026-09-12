@@ -1,0 +1,5 @@
+---
+- source: project
+  gh-pages:
+    url: "https://wangyh775.github.io/book-high-temp-3d-printer"
+...

@@ -3,6 +3,9 @@ project:
   type: book
   output-dir: _book
 
+execute:
+  freeze: auto
+
 book:
   title: "高温 3D 打印机设计与制造"
   subtitle: "机械构型、热场管理、高温挤出与嵌入式控制"
