@@ -3,7 +3,9 @@
 > **机械构型、热场管理、高温挤出与嵌入式控制**  
 > An Engineering Guide to High-Temperature 3D Printer Design and Manufacturing
 
-[![Build Book & Deploy](https://github.com/your-org/book-high-temp-3d-printer/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/your-org/book-high-temp-3d-printer/actions/workflows/build-and-deploy.yml)
+[![Build Book & Deploy](https://github.com/wangyh775/book-high-temp-3d-printer/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/wangyh775/book-high-temp-3d-printer/actions/workflows/build-and-deploy.yml)
+[![Online Book](https://img.shields.io/badge/在线阅读-GitHub%20Pages-brightgreen.svg)](https://wangyh775.github.io/book-high-temp-3d-printer/)
+[![Download PDF](https://img.shields.io/badge/PDF下载-高清完整版-orange.svg)](https://wangyh775.github.io/book-high-temp-3d-printer/high-temp-3d-printer.pdf)
 [![Quarto](https://img.shields.io/badge/framework-Quarto-blue.svg)](https://quarto.org/)
 [![Typst](https://img.shields.io/badge/engine-Typst-orange.svg)](https://typst.app/)
 
