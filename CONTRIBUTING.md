@@ -101,17 +101,20 @@ git push origin feat/ch03-motion-system
 以新增第 10 章为例（如 `chapters/10-slicing-strategy/`）：
 
 1. **创建独立章节目录结构**：
+
    ```text
    chapters/10-slicing-strategy/
    ├── figures/            # 本章专属插图存放目录（禁止跨章节存取图片）
    ├── references.bib      # 本章专属真实参考文献库
    └── index.qmd           # 本章正文源文件
    ```
+
 2. **正文编写规范（严禁冗余提示框）**：
    * 必须以干净标准的二级标题开头（例如 `## 10.1 ...`）；
    * **严禁在正文开头添加**类似“本章导读”、“学习目标”、“单章 PDF 下载链接”等提示框（Callout），这些链接已在全书目录与 GitHub 主页集中展示，在正文中添加会导致导出的单章 PDF 被严重视觉污染。
 3. **在 `_quarto.yml` 中完成注册**：
    打开根目录 `_quarto.yml`，在对应分卷追加章节，并在参考文献列表中挂载本章的 `.bib` 文件：
+
    ```yaml
    book:
      chapters:
@@ -124,6 +127,7 @@ git push origin feat/ch03-motion-system
      # ... 原有文献库 ...
      - chapters/10-slicing-strategy/references.bib   # <-- 注册本章独立文献库
    ```
+
 4. **在 `README.md` 中添加导航行**：
    在根目录 `README.md` 的【📚 全书章节导览与快速入口】表格中追加该章的网页、PDF 和源码链接。
 
@@ -134,9 +138,11 @@ git push origin feat/ch03-motion-system
 1. **从 `_quarto.yml` 中注销**：
    在 `_quarto.yml` 的 `chapters` 和 `bibliography` 列表中删除（或注释掉）对应行；
 2. **移除章节目录**：
+
    ```bash
    git rm -r chapters/09-pid-and-firmware/
    ```
+
 3. **同步更新 `README.md`**：删除表格中对应行。
 4. 提交推送后，GitHub Actions 会自动在全书 PDF、单章 PDF 矩阵和 GitHub Pages 网页版中同步剔除该章节，杜绝死链接。
 
@@ -148,9 +154,11 @@ git push origin feat/ch03-motion-system
 2. 将文件夹名称前加上下划线（例如 `chapters/_10-draft/`）：
    * Quarto 与 CI 脚本在扫描时会自动忽略带下划线（`_`）的文件夹；
    * 本地作者依然可通过命令单独预览和编译它：
+
      ```bash
      quarto preview chapters/_10-draft/index.qmd
      ```
+
    * 待定稿后移除下划线并在 `_quarto.yml` 中解除注释即可一键正式上线。
 
 ### 3.4 常用单章与全书编译命令速查

@@ -2,7 +2,7 @@
 title: "高温恒温腔室与热管理设计"
 ---
 
-## 2.1 腔室热平衡数学物理模型 {#sec-2-1}
+## 腔室热平衡数学物理模型 {#sec-chamber-heat-balance}
 
 工业级高温 3D 打印机腔室是一个典型的包含流体强制对流、固壁导热与非线性表面辐射的多物理场耦合系统 [@incropera2007fundamentals; @spoerk2018effect]。为确保腔内空间温度稳定在目标值 $T_\text{chamber}$（例如 $130^\circ\text{C}$），首先需建立系统稳态热平衡方程：
 
@@ -23,7 +23,7 @@ $$P_\text{heater} + P_\text{bed} + P_\text{hotend} = Q_\text{conduction} + Q_\te
    维持微负压过滤换气时的焓流损失：
    $$Q_\text{ventilation} = \dot{m}_\text{air} c_p \left( T_\text{chamber} - T_\text{ambient} \right)$$ {#eq-ventilation}
 
-## 2.2 复合绝热壁板体系设计 {#sec-2-2}
+## 复合绝热壁板体系设计 {#sec-insulation-panels}
 
 传统冷轧钢板加单层矿棉的隔热方式在 $130^\circ\text{C}\sim 150^\circ\text{C}$ 持续运行工况下，会导致外壳温度超过安全触碰限制（GB/T 8464 规定工业设备可触及外表面温度不得超过 $55^\circ\text{C}$）。为此，本章提出一种四层梯级复合绝热壁板体系：
 
@@ -43,7 +43,7 @@ $$P_\text{heater} + P_\text{bed} + P_\text{hotend} = Q_\text{conduction} + Q_\te
 观察窗是热量流失最大的薄弱环节。严禁采用单层钢化玻璃或普通亚克力。推荐采用**双层低辐射（Low-E）高硼硅耐高温中空玻璃**，中空层填充氩气并保持 $12\,\text{mm}$ 间距，内侧镀纳米氧化锡锑（ATO）红外高反射膜，反射率 $\ge 85\%$。
 :::
 
-## 2.3 立体环流均温风道系统 {#sec-2-3}
+## 立体环流均温风道系统 {#sec-airflow-circulation}
 
 仅依靠底板加热难以建立均匀的立体温场。受浮力驱动自然对流影响，腔室内垂直方向常产生高达 $30^\circ\text{C}\sim 40^\circ\text{C}$ 的严重温度分层梯度 [@vyavahare2020fused]。
 
@@ -55,7 +55,7 @@ $$P_\text{heater} + P_\text{bed} + P_\text{hotend} = Q_\text{conduction} + Q_\te
    * **下部漫射导流板送风**：经充分预热的空气通过底板两侧的百叶导流栅格缓慢吹出，贴合热床底部形成升力屏障；
 3. **避免直吹打印件**：严禁风速超过 $0.8\,\text{m/s}$ 的热风直接吹向成型构件表面，否则流动扰动将打破局部结晶动力学平衡，诱发非预期的局部收缩波纹。
 
-## 2.4 工程案例分析：观察窗局部热桥引发冷凝与应力开裂 {#sec-2-4}
+## 工程案例分析：观察窗局部热桥引发冷凝与应力开裂 {#sec-case-thermal-bridge}
 
 **【故障现象】**
 某 3D 打印装备在腔温升至 $120^\circ\text{C}$ 持续成形 2 小时后，观察窗四角密封边缘处外壳温度高达 $78^\circ\text{C}$，操作人员发生烫伤隐患；同时成型件靠近观察窗侧的边缘严重起翘，远离侧平整。
@@ -74,7 +74,7 @@ $$P_\text{heater} + P_\text{bed} + P_\text{hotend} = Q_\text{conduction} + Q_\te
 
 ## 思考与练习题 {.unnumbered}
 
-### 一、概念选择题
+### 概念选择题
 
 1. 在 $130^\circ\text{C}$ 以上高温腔室壁板隔热设计中，阻止向外辐射散热最关键的内表面措施是（ ）。
    A. 喷涂高发射率黑色耐热漆  
@@ -88,12 +88,12 @@ $$P_\text{heater} + P_\text{bed} + P_\text{hotend} = Q_\text{conduction} + Q_\te
    C. $10.0\,\text{m/s}$  
    D. 无需限制
 
-### 二、简答分析题
+### 简答分析题
 
 1. 什么是建筑与装备热工学中的“热桥效应”？在 3D 打印机恒温热室设计中常见的典型热桥有哪些？应如何消除？
 2. 试对比 PTC 陶瓷加热元件与金属电阻发热管在 3D 打印机腔室空气加热中的优缺点。
 
-### 三、工程设计与计算题
+### 工程设计与计算题
 
 设某高温腔室由 6 个平面壁板围成，总表面积为 $A = 1.2\,\text{m}^2$。隔热壁采用复合板构造：第一层为 $1\,\text{mm}$ 304不锈钢（$\lambda_1 = 16\,\text{W/(m}\cdot\text{K)}$），第二层为 $15\,\text{mm}$ 二氧化硅气凝胶（$\lambda_2 = 0.02\,\text{W/(m}\cdot\text{K)}$），第三层为 $2\,\text{mm}$ 铝合金外壳（$\lambda_3 = 160\,\text{W/(m}\cdot\text{K)}$）。内壁温度为 $130^\circ\text{C}$，外壁表面对流换热系数为 $h_\text{ext} = 8.5\,\text{W/(m}^2\cdot\text{K)}$，环境空气温度为 $25^\circ\text{C}$。
 1. 计算复合壁的单位面积导热总热阻 $R_\text{cond}$；
