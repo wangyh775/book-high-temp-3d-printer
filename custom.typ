@@ -47,14 +47,14 @@
   justify: true,
 )
 
-// 消除首行缩进的“例外区域”（标题、图表、列表、代码、公式、引用绝不缩进）
+// 消除首行缩进的“例外区域”（仅针对块级容器，绝不作用于行内公式与行内代码）
 #show heading: set par(first-line-indent: 0em)
 #show figure: set par(first-line-indent: 0em)
 #show table: set par(first-line-indent: 0em)
-#show raw: set par(first-line-indent: 0em)
+#show raw.where(block: true): set par(first-line-indent: 0em)
 #show list: set par(first-line-indent: 0em)
 #show enum: set par(first-line-indent: 0em)
-#show math.equation: set par(first-line-indent: 0em)
+#show math.equation.where(block: true): set par(first-line-indent: 0em)
 
 // ------------------------------------------------------------------------------
 // 4. 标题层级体系（黑体，高校硕士论文三级标题规范）

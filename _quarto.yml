@@ -52,10 +52,6 @@ bibliography:
   - chapters/08-thermal-sensors/references.bib
   - chapters/09-pid-and-firmware/references.bib
 
-csl: china-national-standard-gb-t-7714-2015-numeric.csl
-resource-path:
-  - .
-
 format:
   typst:
     papersize: a4
@@ -66,6 +62,7 @@ format:
     toc-depth: 2
     number-sections: true
     keep-typ: true
+    citeproc: true
     include-before-body: custom.typ
   html:
     theme:
