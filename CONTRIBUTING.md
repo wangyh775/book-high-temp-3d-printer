@@ -92,7 +92,79 @@ git push origin feat/ch03-motion-system
 
 ---
 
-## 3. Main 主分支保护与合并门禁机制
+## 3. 章节生命周期管理：注册（新增）、注销（删除）与草稿控制
+
+本项目采用**“动态通配与单章独立闭环”**的工程架构，GitHub Actions 会自动动态扫描所有子章节，并同时编译输出整本大合集 PDF、每个章节的独立单章小 PDF，以及 GitHub Pages 网页版。作者对章节进行调整时，请严格遵守以下操作步骤：
+
+### 3.1 注册（新增）一个新章节
+
+以新增第 10 章为例（如 `chapters/10-slicing-strategy/`）：
+
+1. **创建独立章节目录结构**：
+   ```text
+   chapters/10-slicing-strategy/
+   ├── figures/            # 本章专属插图存放目录（禁止跨章节存取图片）
+   ├── references.bib      # 本章专属真实参考文献库
+   └── index.qmd           # 本章正文源文件
+   ```
+2. **正文编写规范（严禁冗余提示框）**：
+   * 必须以干净标准的二级标题开头（例如 `## 10.1 ...`）；
+   * **严禁在正文开头添加**类似“本章导读”、“学习目标”、“单章 PDF 下载链接”等提示框（Callout），这些链接已在全书目录与 GitHub 主页集中展示，在正文中添加会导致导出的单章 PDF 被严重视觉污染。
+3. **在 `_quarto.yml` 中完成注册**：
+   打开根目录 `_quarto.yml`，在对应分卷追加章节，并在参考文献列表中挂载本章的 `.bib` 文件：
+   ```yaml
+   book:
+     chapters:
+       - part: "第四部分 电气控制、传感与固件算法"
+         chapters:
+           # ... 原有章节 ...
+           - chapters/10-slicing-strategy/index.qmd   # <-- 注册章节正文
+
+   bibliography:
+     # ... 原有文献库 ...
+     - chapters/10-slicing-strategy/references.bib   # <-- 注册本章独立文献库
+   ```
+4. **在 `README.md` 中添加导航行**：
+   在根目录 `README.md` 的【📚 全书章节导览与快速入口】表格中追加该章的网页、PDF 和源码链接。
+
+### 3.2 删除（注销）一个旧章节
+
+当某个章节需要废弃或合并时：
+
+1. **从 `_quarto.yml` 中注销**：
+   在 `_quarto.yml` 的 `chapters` 和 `bibliography` 列表中删除（或注释掉）对应行；
+2. **移除章节目录**：
+   ```bash
+   git rm -r chapters/09-pid-and-firmware/
+   ```
+3. **同步更新 `README.md`**：删除表格中对应行。
+4. 提交推送后，GitHub Actions 会自动在全书 PDF、单章 PDF 矩阵和 GitHub Pages 网页版中同步剔除该章节，杜绝死链接。
+
+### 3.3 章节草稿与隐藏（暂不发布）规范
+
+若章节正处于撰写中，不想让它被公开编译到全书 PDF 或发布到 GitHub Pages：
+
+1. 在 `_quarto.yml` 中使用 `#` 注释掉该章节条目；
+2. 将文件夹名称前加上下划线（例如 `chapters/_10-draft/`）：
+   * Quarto 与 CI 脚本在扫描时会自动忽略带下划线（`_`）的文件夹；
+   * 本地作者依然可通过命令单独预览和编译它：
+     ```bash
+     quarto preview chapters/_10-draft/index.qmd
+     ```
+   * 待定稿后移除下划线并在 `_quarto.yml` 中解除注释即可一键正式上线。
+
+### 3.4 常用单章与全书编译命令速查
+
+| 操作场景 | 执行命令 | 输出与效果 |
+| :--- | :--- | :--- |
+| **单章网页实时预览** | `quarto preview chapters/01-introduction/index.qmd` | 浏览器直达该章，保存即 0.5s 热重载 |
+| **单章独立 PDF 编译** | `quarto render chapters/01-introduction/index.qmd --profile chapter --to typst` | 生成 `_book/chapters/01-introduction/index.pdf`（仅 200~300KB） |
+| **全书整本 PDF 编译** | `quarto render --to typst` | 生成 `_book/high-temp-3d-printer.pdf`（整本大专著） |
+| **全书网页站点编译** | `quarto render --to html` | 生成 `_book/index.html`（整站网页） |
+
+---
+
+## 4. Main 主分支保护与合并门禁机制
 
 为了保证全书始终处于随时可编译出高水准 Typst 彩印 PDF 的稳定状态，仓库已对 `main` 分支启用了**强制分支保护（Branch Protection）**：
 
@@ -103,7 +175,7 @@ git push origin feat/ch03-motion-system
 
 ---
 
-## 4. 全书统一工程参数基线
+## 5. 全书统一工程参数基线
 
 多人编写专著最忌讳各章节参数互相打架。在涉及整机工程指标时，所有章节必须对齐以下基线：
 
@@ -115,14 +187,14 @@ git push origin feat/ch03-motion-system
 
 ---
 
-## 5. 学术诚信与文献规范
+## 6. 学术诚信与文献规范
 
 * **拒绝虚构文献**：引用的文献必须真实可信，必须具有作者、刊名、年份和真实 DOI，杜绝一切未经核实的幻觉文献；
 * **原创与版权归属**：严禁直接抄袭国内外专著或商业公司保密文档。引用已有研究成果或行业公开数据时，必须如实标明来源。
 
 ---
 
-## 6. 作者署名与致谢机制
+## 7. 作者署名与致谢机制
 
 * **贡献确认**：所有通过 PR 参与本书实质性撰写、深度审稿、重要数据或图表提供的贡献者，都将在本书前言的**“编写组名单”**中予以正式署名；
 * **章节署名**：对于主笔完成某个完整章节的作者，将在该章节开头以作者身份署名并注明所属工作机构/团队；
