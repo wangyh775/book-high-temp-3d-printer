@@ -61,8 +61,7 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
-    keep-typ: true
-    citeproc: true
+    keep-typ: false
     include-before-body: custom.typ
   html:
     theme:
