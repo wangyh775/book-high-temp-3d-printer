@@ -1,0 +1,159 @@
+---
+title: "温度闭环控制与固件配置"
+---
+
+::: {.callout-note icon=false}
+### 🎯 本章导读与学习目标
+
+**【知识目标】**
+1. 掌握超高温热端大滞后非线性热系统产生积分饱和超调的动力学机理；
+2. 掌握抗积分饱和、微分先行与流量自适应前馈复合 PID 控制算法；
+3. 掌握 Klipper 固件中 MAX31865 SPI 驱动、热失控检测（`verify_heater`）与联锁安全宏配置。
+
+**【能力目标】**
+1. 具备利用阶跃响应与极限环振荡法整定工程 PID 参数的能力；
+2. 能够针对工业级高温设备编写严谨的断电保护、排障恢复与温度联锁 G-Code 宏程序。
+:::
+
+## 9.1 高温大惯性热系统的控制挑战 {#sec-9-1}
+
+超高温热端与恒温腔室是典型的具有**大滞后、非线性时变与强热惯性**的一阶带纯滞后控制对象 [@astrom2006advanced; @klipper2022architecture]。若直接采用传统未修正的标准 PID 算法，极易出现两大工程顽疾：
+
+1. **升温初期剧烈超调（Overshoot）**：由于积分项累积饱和，在接近 $450^\circ\text{C}$ 设定目标时产生高达 $20^\circ\text{C}\sim 40^\circ\text{C}$ 的大幅过冲，极易烧毁高分子原料甚至触发硬件超温联锁；
+2. **高速挤出动态欠温（Undershoot）**：当挤出机从怠速突然跃迁至 $15\,\text{mm}^3/\text{s}$ 的高速挤出时，冷丝材快速吸收潜热，单纯依靠误差驱动的反馈控制滞后明显，导致熔区温度骤降 $10^\circ\text{C}\sim 15^\circ\text{C}$，诱发欠挤出缺陷。
+
+## 9.2 前馈-反馈复合现代温控策略 {#sec-9-2}
+
+### 9.2.1 离散化抗积分饱和 PID 算法
+
+在嵌入式固件中，采用带**积分分离与微分先行**的增量式 PID 控制律：
+
+$$u(k) = K_p e(k) + \beta(e) K_i \sum_{j=0}^{k} e(j) \Delta t - K_d \frac{T_\text{meas}(k) - T_\text{meas}(k-1)}{\Delta t}$$ {#eq-pid-form}
+
+式中：$\beta(e)$ 为积分分离非线性加权开关函数：
+
+$$\beta(e) = \begin{cases} 1, & |e(k)| \le \epsilon_\text{threshold} \\ 0, & |e(k)| > \epsilon_\text{threshold} \end{cases}$$ {#eq-anti-windup}
+
+当系统误差 $|e(k)|$ 超过阈值（如 $10^\circ\text{C}$）时，彻底切除积分项，仅由比例与微分项快速逼近，消除升温超调；只有当温度进入小误差窗口时，才投入积分作用消除稳态静态余差。
+
+### 9.2.2 挤出流量自适应前馈注入（Feedforward）
+
+根据能量守恒定律，克服冷丝材熔化所需的理论功率增量 $\Delta P_\text{flow}$ 直接正比于当前的体积挤出速率 $Q(t)$：
+
+$$\Delta P_\text{flow}(t) = \rho_\text{polymer} \cdot Q(t) \cdot \left[ c_p (T_\text{target} - T_\text{ambient}) + \Delta H_\text{fusion} \right]$$ {#eq-feedforward-power}
+
+在固件层（如 Klipper 运动规划队列）中，在步进电机开始加速推进丝材的同时，提前按比例向加热棒施加前馈 PWM 增益，实现“冷丝未至、热流先到”，将动态温度波动严格限制在 $\pm 1.0^\circ\text{C}$ 以内。
+
+## 9.3 Klipper 固件工业级参数配置实战 {#sec-9-3}
+
+以下为工业级高温热端与高精度 MAX31865 传感器的典型 `printer.cfg` 参数配置块：
+
+```ini
+# ==============================================================================
+# 500°C 超高温热端与 MAX31865 铂电阻配置
+# ==============================================================================
+[extruder]
+step_pin: PB10
+dir_pin: !PB11
+enable_pin: !PB9
+microsteps: 16
+rotation_distance: 22.678
+gear_ratio: 50:10
+nozzle_diameter: 0.400
+filament_diameter: 1.750
+heater_pin: PA2
+
+# 采用 MAX31865 采集 PT1000
+sensor_type: MAX31865
+sensor_pin: PC9
+spi_speed: 4000000
+spi_software_sclk_pin: PC10
+spi_software_mosi_pin: PC12
+spi_software_miso_pin: PC11
+rtd_nominal_r: 1000
+rtd_reference_r: 4300
+rtd_num_of_wires: 2
+rtd_use_50Hz_filter: True
+
+# 控制与安全极值范围
+control: pid
+pid_Kp: 24.350
+pid_Ki: 1.820
+pid_Kd: 81.420
+min_temp: 0
+max_temp: 500
+min_extrude_temp: 220
+max_extrude_cross_section: 5.0
+
+[verify_heater extruder]
+max_error: 140
+check_gain_time: 25
+hysteresis: 5
+heating_gain: 2
+```
+
+::: {.callout-note}
+### 热失控检测（verify_heater）参数调优
+高温热端的蓄热块由于采用大导热性材料且热容量较大，在从 $400^\circ\text{C}$ 爬升至 $450^\circ\text{C}$ 的后半程，加热温升速率会由于向环境辐射加剧而显著变缓。若保持默认的 `check_gain_time: 20`，极易因升温速率低于判定阈值而触发虚假的热失控警报（`Heater extruder not heating at expected rate`）。对于超高温系统，建议将 `check_gain_time` 适当放宽至 $25\sim 35\,\text{s}$。
+:::
+
+## 9.4 工程案例分析：升温积分饱和导致 $420^\circ\text{C}$ 超调冲至 $465^\circ\text{C}$ 烧焦物料 {#sec-9-4}
+
+**【质量事故】**
+在调试高温热端时，操作员在上位机直接将挤出机温度设定为目标值 $420^\circ\text{C}$。热端以最大满功率升温，当实际温度到达 $420^\circ\text{C}$ 时，加热器仍未及时关闭，温度一路飙升至 $465^\circ\text{C}$，熔流道内残留的工程线材彻底热解焦化碳化，喷嘴严重堵死。
+
+**【控制机理复盘】**
+标准增量式 PID 在远距离温升阶段，积分项随时间呈二次曲线急剧累积（积分风卷效应 Integral Windup）。当测量温度跨越目标设定值时，积分累积的巨大正向控制量无法瞬间释放清零，必须等待负误差累积将其缓慢抵消，导致严重的热冲。
+
+**【优化方案】**
+在固件中启用分段平滑升温宏程序，并配置积分分离阈值 $\epsilon = 12^\circ\text{C}$：当温差大于 $12^\circ\text{C}$ 时禁止积分累加；当温差进入 $12^\circ\text{C}$ 范围内才激活积分微调。改进后从室温一步升至 $450^\circ\text{C}$ 时，超调量严格压低至 $< 1.5^\circ\text{C}$，彻底杜绝焦料。
+
+## 本章小结 {.unnumbered}
+
+1. 超高温工况必须采用带积分分离与微分先行的鲁棒 PID 控制律；
+2. 结合前馈补偿算法，可有效解决高速大流量出料时的突发性欠温现象；
+3. 科学配置 Klipper 的 `verify_heater` 与安全宏，可平衡系统安全性与抗误报鲁棒性。
+
+## 思考与练习题 {.unnumbered}
+
+### 一、概念选择题
+
+1. 在带积分分离的 PID 控制算法中，积分项在下列哪种情况下被切除暂停累加？（ ）
+   A. 系统误差处于极小的稳态窗口时  
+   B. 设定值与测量值之间的误差 $|e(k)|$ 大于设定的门限阈值 $\epsilon$ 时  
+   C. 传感器发生开路故障时  
+   D. 打印暂停时
+
+2. 在 Klipper 固件中，对于大热容量的超高温热端，若在高温段经常发生误报热失控停机，合理的配置调整是（ ）。
+   A. 彻底关闭热失控保护  
+   B. 适当增大 `check_gain_time` 参数（如从 20 放宽至 30 秒）  
+   C. 调小比例系数 $K_p$  
+   D. 调大积分系数 $K_i$
+
+### 二、简答分析题
+
+1. 简述什么是 PID 控制中的“微分先行（Derivative of Process Variable）”，它相比“误差微分（Derivative of Error）”在设定值突变时有什么明显优势？
+2. 试编写一段 Klipper 安全升温宏脚本（Jinja2 模板伪代码），实现阶梯预热与热床/腔室温度联锁。
+
+### 三、工程设计与计算题
+
+已知某高温热端在静态平衡时，保持 $450^\circ\text{C}$ 仅需稳态维持电功率 $P_0 = 25\,\text{W}$。当打印机突然从静止加速到大体积挤出速率 $Q = 18\,\text{mm}^3/\text{s}$（线材物性：密度 $\rho = 1.30\,\text{g/cm}^3$，比热容 $c_p = 1.8\,\text{J/(g}\cdot\text{K)}$，熔融潜热 $\Delta H = 40\,\text{J/g}$），进料初始温度为环境腔温 $T_c = 130^\circ\text{C}$。
+1. 计算熔化该新增线材所需理论吸收的物理热功率增量 $\Delta P_\text{flow}$；
+2. 评估若不采用前馈补偿，仅靠反馈系统调节该功率缺额是否会导致挤出区温度跌落？
+
+::: {.callout-tip collapse="true"}
+### 💡 习题参考提示
+* 题目 1：答案 B。
+* 题目 2：答案 B。
+* 计算题提示：
+  1. 质量流速 $\dot{m} = \rho \cdot Q = 1.30 \times 10^{-3}\,\text{g/mm}^3 \times 18\,\text{mm}^3/\text{s} = 0.0234\,\text{g/s}$；
+  2. 升温温差 $\Delta T = 450 - 130 = 320\,\text{K}$；
+  3. 显热功率 $P_\text{sensible} = \dot{m} \cdot c_p \cdot \Delta T = 0.0234 \times 1.8 \times 320 \approx 13.48\,\text{W}$；
+  4. 潜热功率 $P_\text{latent} = \dot{m} \cdot \Delta H = 0.0234 \times 40 \approx 0.936\,\text{W}$；
+  5. 理论功率缺额 $\Delta P_\text{flow} \approx 14.42\,\text{W}$！相比静态维持功率（$25\,\text{W}$）增幅高达近 $60\%$。若无前馈提前注入，必然引起显著的动态温度跌落（通常在 $8\sim 15^\circ\text{C}$ 之间）。
+:::
+
+## 本章参考文献 {.unnumbered}
+
+::: {#refs}
+:::

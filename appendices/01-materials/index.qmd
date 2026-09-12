@@ -1,0 +1,22 @@
+---
+title: "典型高温线材热物理性能与工艺参数"
+---
+
+在高温 3D 打印实践中，针对不同高分子基体材料建立精准的温度窗口与热处理规范是确保打印成功的前提。@tbl-materials-db 汇总了主流工业级特种工程塑料的典型物性参数与推荐切片打印配置：
+
+| 材料种类 | 玻璃化温度 $T_g$ | 熔点 $T_m$ | 喷嘴温度区间 | 热床温度区间 | 腔室目标温度 | 典型烘料干燥规范 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **纯 PEEK**（聚醚醚酮） | $143^\circ\text{C}$ | $343^\circ\text{C}$ | $390\sim 430^\circ\text{C}$ | $130\sim 150^\circ\text{C}$ | $90\sim 130^\circ\text{C}$ | $120^\circ\text{C}$ / $6\sim 8\,\text{h}$ |
+| **CF-PEEK**（碳纤增强）| $143^\circ\text{C}$ | $343^\circ\text{C}$ | $400\sim 440^\circ\text{C}$ | $130\sim 150^\circ\text{C}$ | $100\sim 140^\circ\text{C}$| $120^\circ\text{C}$ / $6\sim 8\,\text{h}$ |
+| **PEKK**（聚醚酮酮） | $156^\circ\text{C}$ | $305\sim 335^\circ\text{C}$| $360\sim 390^\circ\text{C}$ | $120\sim 140^\circ\text{C}$ | $80\sim 110^\circ\text{C}$ | $120^\circ\text{C}$ / $6\,\text{h}$ |
+| **ULTEM 9085**（PEI） | $186^\circ\text{C}$ | 无定形（无明显熔点） | $350\sim 380^\circ\text{C}$ | $140\sim 160^\circ\text{C}$ | $110\sim 150^\circ\text{C}$| $130^\circ\text{C}$ / $6\sim 8\,\text{h}$ |
+| **ULTEM 1010**（PEI） | $217^\circ\text{C}$ | 无定形（无明显熔点） | $370\sim 400^\circ\text{C}$ | $150\sim 170^\circ\text{C}$ | $120\sim 160^\circ\text{C}$| $140^\circ\text{C}$ / $8\,\text{h}$ |
+| **PPSU**（聚亚苯基砜） | $220^\circ\text{C}$ | 无定形 | $360\sim 390^\circ\text{C}$ | $140\sim 160^\circ\text{C}$ | $110\sim 140^\circ\text{C}$| $130^\circ\text{C}$ / $6\,\text{h}$ |
+| **PPS**（聚苯硫醚） | $90^\circ\text{C}$ | $285^\circ\text{C}$ | $310\sim 340^\circ\text{C}$ | $110\sim 130^\circ\text{C}$ | $70\sim 90^\circ\text{C}$ | $100^\circ\text{C}$ / $4\sim 6\,\text{h}$ |
+
+: 主流特种工程塑料热物理特性与打印工艺参数对照表 {#tbl-materials-db}
+
+::: {.callout-important}
+### 吸水率与预干燥重要性
+绝大多数特种高分子极易吸收环境空气中的水分（如 PEI 平衡吸水率超过 $0.7\%$）。高温下微量水分会在熔融流道内瞬间汽化形成微气泡，诱发严重的“放炮发泡”缺陷，导致拉伸强度与层间结合力断崖式下降。打印前线材必须严格放入鼓风恒温干燥箱，按照上表工艺烘烤至含水量 $< 0.02\%$。
+:::

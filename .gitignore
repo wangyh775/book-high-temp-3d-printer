@@ -1,0 +1,7 @@
+/.quarto/
+/_book/
+/index_files/
+index.typ
+*.typst.md
+
+**/*.quarto_ipynb

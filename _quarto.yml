@@ -1,0 +1,72 @@
+---
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "高温 3D 打印机设计与制造"
+  subtitle: "机械构型、热场管理、高温挤出与嵌入式控制"
+  author: "编写组"
+  date: today
+  search: true
+  page-navigation: true
+  output-file: "high-temp-3d-printer"
+  downloads: [pdf]
+  sidebar:
+    collapse-level: 2
+  chapters:
+    - index.qmd
+    - part: "第一部分 硬件架构与恒温物理场设计"
+      chapters:
+        - chapters/01-introduction/index.qmd
+        - chapters/02-chamber-design/index.qmd
+    - part: "第二部分 机械运动机构与热膨胀补偿"
+      chapters:
+        - chapters/03-motion-system/index.qmd
+        - chapters/04-thermal-compensation/index.qmd
+    - part: "第三部分 超高温挤出与热端系统"
+      chapters:
+        - chapters/05-hotend-design/index.qmd
+        - chapters/06-extruder-system/index.qmd
+    - part: "第四部分 电气控制、传感与固件算法"
+      chapters:
+        - chapters/07-control-electronics/index.qmd
+        - chapters/08-thermal-sensors/index.qmd
+        - chapters/09-pid-and-firmware/index.qmd
+  appendices:
+    - appendices/01-materials/index.qmd
+    - appendices/02-bom/index.qmd
+
+bibliography:
+  - references.bib
+  - chapters/01-introduction/references.bib
+  - chapters/02-chamber-design/references.bib
+  - chapters/03-motion-system/references.bib
+  - chapters/04-thermal-compensation/references.bib
+  - chapters/05-hotend-design/references.bib
+  - chapters/06-extruder-system/references.bib
+  - chapters/07-control-electronics/references.bib
+  - chapters/08-thermal-sensors/references.bib
+  - chapters/09-pid-and-firmware/references.bib
+
+format:
+  typst:
+    papersize: a4
+    font: "Noto Serif SC"
+    codefont: "Cascadia Code"
+    lang: zh
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    keep-typ: false
+  html:
+    theme:
+      - cosmo
+      - custom.scss
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    lightbox: true
+...
