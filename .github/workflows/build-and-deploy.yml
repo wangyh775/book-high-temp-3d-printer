@@ -1,0 +1,90 @@
+---
+name: Build Book & Deploy to GitHub Pages
+
+'on':
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Chinese Fonts & Typography Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk fontconfig
+          fc-cache -fv
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: pre-release
+
+      - name: Verify Quarto & Typst Installation
+        run: |
+          quarto --version
+          quarto check
+
+      - name: Compile Book to PDF (Typst Orange-Book)
+        run: |
+          quarto render --to typst
+
+      - name: Compile Book to HTML (Interactive Web Book)
+        run: |
+          quarto render --to html
+
+      - name: Verify Output Assets
+        run: |
+          echo "=== Generated files in _book/ ==="
+          ls -lh _book/
+
+      - name: Upload PDF Artifact (Commit & PR Preview)
+        uses: actions/upload-artifact@v4
+        with:
+          name: high-temp-3d-printer-pdf
+          path: _book/high-temp-3d-printer.pdf
+          retention-days: 30
+
+      - name: Upload Pages Artifact
+        if: >-
+          github.event_name == 'push' &&
+          (github.ref == 'refs/heads/main' ||
+           github.ref == 'refs/heads/master')
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _book
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: >-
+      github.event_name == 'push' &&
+      (github.ref == 'refs/heads/main' ||
+       github.ref == 'refs/heads/master')
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+...
