@@ -5,6 +5,8 @@ title: "高温测温与高精度采样"
 ::: {.callout-note icon=false}
 ### 🎯 本章导读与学习目标
 
+> 📄 **单章 PDF 独立预览**：[点击此处直接在浏览器预览或下载本章独立 PDF (index.pdf)](index.pdf)
+
 **【知识目标】**
 1. 掌握 NTC 热敏电阻在 $300^\circ\text{C}$ 以上高温失效与精度退化的本质机理；
 2. 掌握铂电阻（RTD）Callendar-Van Dusen 物理方程与两线制/三线制/四线制引线电阻补偿原理；

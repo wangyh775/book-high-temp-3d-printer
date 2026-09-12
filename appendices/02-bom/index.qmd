@@ -2,6 +2,8 @@
 title: "核心物料清单（BOM）与选型参考"
 ---
 
+> 📄 **单章 PDF 独立预览**：[点击此处直接在浏览器预览或下载本附录独立 PDF (index.pdf)](index.pdf)
+
 本附录整理了构建一台有效成形体积为 $300 \times 300 \times 300\,\text{mm}$、腔室耐温 $130^\circ\text{C}$、热端耐温 $500^\circ\text{C}$ 的工业级高温 3D 打印机的核心物料清单（Bill of Materials, BOM），供工程研发与部件采购参考。
 
 ## 机械与绝热系统

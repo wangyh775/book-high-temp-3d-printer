@@ -50,10 +50,23 @@ jobs:
           mkdir -p /tmp/quarto-pdf
           cp _book/high-temp-3d-printer.pdf /tmp/quarto-pdf/
 
+      - name: Compile Single Chapter PDFs (Standalone Mode)
+        run: |
+          mkdir -p /tmp/chapter-pdfs
+          for dir in chapters/* appendices/*; do
+            if [ -f "$dir/index.qmd" ]; then
+              echo "Rendering standalone PDF for $dir/index.qmd"
+              quarto render "$dir/index.qmd" --profile chapter --to typst
+              mkdir -p "/tmp/chapter-pdfs/$dir"
+              cp "_book/$dir/index.pdf" "/tmp/chapter-pdfs/$dir/"
+            fi
+          done
+
       - name: Compile Book to HTML (Interactive Web Book)
         run: |
           quarto render --to html
           cp /tmp/quarto-pdf/high-temp-3d-printer.pdf _book/
+          cp -r /tmp/chapter-pdfs/* _book/
 
       - name: Verify Output Assets
         run: |
