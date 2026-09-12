@@ -46,9 +46,9 @@
       let part-counter = part-counter.at(it.element.location())
       if (part-change){
         v(0.7cm, weak: true)
-        box(width: 1.1cm, fill: main-color.lighten(80%), inset: 5pt, align(center, text(size: textSize1, weight: "bold", fill: main-color.lighten(30%), numbering("I",part-counter.first()))))
+        box(width: 1.1cm, fill: none, inset: 5pt, align(center, text(size: textSize1, weight: "bold", fill: main-color, numbering("I",part-counter.first()))))
         h(0.1cm)
-        box(width: 100% - 1.2cm, fill: main-color.lighten(60%), inset: 5pt, align(center, link(part-location,text(size: textSize1, weight: "bold", part-state))))
+        box(width: 100% - 1.2cm, fill: none, inset: 5pt, align(left, link(part-location,text(size: textSize1, weight: "bold", fill: main-color, part-state))))
         v(0.45cm, weak: true)
       }
       else{

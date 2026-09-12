@@ -22,30 +22,11 @@
 )
 
 // ------------------------------------------------------------------------------
-// 目录样式微调：去除“第几部分 (Part)”的实色蓝底，设为透明底素雅学术排版
-// ------------------------------------------------------------------------------
-#show outline: it => {
-  show box: b => {
-    if b.fill != none {
-      let fields = b.fields()
-      let _ = fields.remove("body")
-      box(..fields, fill: none)[
-        #set text(fill: color-primary, weight: "bold")
-        #b.body
-      ]
-    } else {
-      b
-    }
-  }
-  it
-}
-
-// ------------------------------------------------------------------------------
 // 2. 字体族定义（兼容 Windows / Linux / macOS）
 // ------------------------------------------------------------------------------
-#let font-serif = ("Noto Serif SC", "SimSun", "Times New Roman")
-#let font-sans = ("Noto Sans SC", "SimHei", "Microsoft YaHei")
-#let font-mono = ("Cascadia Code", "Cascadia Mono", "Courier New")
+#let font-serif = ("Noto Serif CJK SC", "Noto Serif SC", "SimSun", "Times New Roman")
+#let font-sans = ("Noto Sans CJK SC", "Noto Sans SC", "SimHei", "Microsoft YaHei")
+#let font-mono = ("Cascadia Code", "Cascadia Mono", "DejaVu Sans Mono", "Courier New")
 
 // ------------------------------------------------------------------------------
 // 3. 传统中文图书与硕士论文排版规范（宋体正文、黑体标题、首行缩进）
