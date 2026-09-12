@@ -3,7 +3,10 @@
 /_book/
 /index_files/
 index.typ
-*.typst.md
+**/*.typst.md
+**/*.typ
+!custom.typ
+!_extensions/**/*.typ
 **/*.quarto_ipynb
 /site_libs/
 chapters/**/*.html
